@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, View, ScrollView, Image, TouchableHighlight,TouchableOpacity,ListView } from 'react-native';
 //import {Circle} from '../components/Circle';
+import { CLIENTS } from '../../mockdata/deliveryMock.js';
+import { WEEK } from '../../mockdata/week.js';
 
 
- const customers = [
-      {name: 'Ruth Cohen', streetName:'Bereshit', streetNumber: 16, city:'Ramat-Hasharon',supplyDay:'Sunday'},
-      {name: 'Ron Cohen',streetName:'Ovdat', streetNumber: 9, city:'Holon',supplyDay:'Monday'},
-      {name: 'Michel Levi',streetName:'Bet-Gobrin', streetNumber: 7, city:'Bne-Brak',supplyDay:'Monday'},
-      {name: 'Israel Meir',streetName:'Hamlachim', streetNumber: 5, city:'Jerusalem',supplyDay:'Wednesday'},
-      {name: 'Ron Cohen',streetName:'Ovdat', streetNumber: 9, city:'Holon',supplyDay:'Monday'},
-      {name: 'Michel Levi',streetName:'Bet-Gobrin', streetNumber: 7, city:'Bne-Brak',supplyDay:'Monday'},
-      {name: 'Israel Meir',streetName:'Hamlachim', streetNumber: 5, city:'Jerusalem',supplyDay:'Wednesday'}
-  ]
+  const customers = [
+       {name: 'Ruth Cohen', streetName:'Bereshit', streetNumber: 16, city:'Ramat-Hasharon',supplyDay:'Sunday'},
+       {name: 'Ron Cohen',streetName:'Ovdat', streetNumber: 9, city:'Holon',supplyDay:'Monday'},
+       {name: 'Michel Levi',streetName:'Bet-Gobrin', streetNumber: 7, city:'Bne-Brak',supplyDay:'Monday'},
+       {name: 'Israel Meir',streetName:'Hamlachim', streetNumber: 5, city:'Jerusalem',supplyDay:'Wednesday'},
+       {name: 'Ron Cohen',streetName:'Ovdat', streetNumber: 9, city:'Holon',supplyDay:'Monday'},
+       {name: 'Michel Levi',streetName:'Bet-Gobrin', streetNumber: 7, city:'Bne-Brak',supplyDay:'Monday'},
+       {name: 'Israel Meir',streetName:'Hamlachim', streetNumber: 5, city:'Jerusalem',supplyDay:'Wednesday'}
+   ]
 
 export default class CardComponent extends Component {
 
@@ -21,13 +23,28 @@ export default class CardComponent extends Component {
 
   constructor() {
     super();
+    clientsList = CLIENTS;
+   
+    var time1 = new Date (clientsList[0]['from']);
+    var time2 = new Date(clientsList[0]['to']);
+    time1 = time1.getHours() + ':' + '00';
+    time2 = time2.getHours() + ':' + '00';
+    console.log(time1+" "+time2);
+    
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      userDataSource: ds.cloneWithRows(customers),
+      userDataSource: ds.cloneWithRows(clientsList),
     };
+
   }
 
   renderRow(customer, sectionID, rowID, highlightRow){
+
+    var timeFrom = new Date(customer['from']).getHours() + ':' + '00';
+    var timeTo = new Date(customer['to']).getHours() + ':' + '00';
+    var dayName = WEEK[ new Date(customer['to']).getDay()];
+    
+    console.log(new Date(customer['to']).getDay());
     return(
     <TouchableOpacity 
     style={styles.container} 
@@ -37,20 +54,22 @@ export default class CardComponent extends Component {
       <View style={styles.cardsHeader}>
 
         <View>
-          <Text style={styles.allDate}> {customer.supplyDay} </Text>
+          <Text style={styles.allDate}> {dayName} </Text>
           <Text style={styles.allDate}> 21.01.2018 </Text>
         </View>
         <View>
           <Text style={styles.arrive}> Arrive between </Text>
-          <Text style={styles.arriveHour}> 14:00 - 17:00 </Text>
+          <Text style={styles.arriveHour}>
+          {timeFrom} - {timeTo}  </Text>
         </View>
 
       </View>
       <View style={styles.cardDownContainer}>
         <View>
-          <Text style={styles.id}> ID 8531286 </Text>
-          <Text style={styles.customerDetails}> {customer.name} </Text>
-          <Text style={styles.customerDetails}> {customer.streetName} {customer.streetNumber}, {customer.city} </Text>
+          <Text style={styles.id}>{customer['humanId']}</Text>  
+          <Text style={styles.customerDetails}> {customer.client['name']} </Text>
+          <Text style={styles.customerDetails}> {customer.address['street']} {customer.address['number']}, 
+          {' '+customer.address['city']} </Text>
         </View>
 
         <View style={styles.circle}>
