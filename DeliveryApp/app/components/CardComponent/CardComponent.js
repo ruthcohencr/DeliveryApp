@@ -17,6 +17,22 @@ import { WEEK } from '../../mockdata/week.js';
 
 export default class CardComponent extends Component {
 
+  bringDate(date){
+    var returnDate = "";
+    
+    var dd = date.getDate();
+    returnDate += dd.toString().length == 1 ? '0'+ dd +'.': dd+".";
+    console.log(returnDate);
+    var mm = date.getMonth()+1;
+
+    returnDate += mm.toString().length == 1 ? '0'+ mm +'.': mm+'.';
+
+    returnDate += date.getFullYear();
+
+    console.log(returnDate);
+    return returnDate;
+  }
+
   onCardPress() {
     console.log('Card Pressed');
   };
@@ -43,8 +59,10 @@ export default class CardComponent extends Component {
     var timeFrom = new Date(customer['from']).getHours() + ':' + '00';
     var timeTo = new Date(customer['to']).getHours() + ':' + '00';
     var dayName = WEEK[ new Date(customer['to']).getDay()];
+    var supplyDate = new Date(customer['from']);
+
+    var displayDate = this.bringDate(supplyDate);
     
-    console.log(new Date(customer['to']).getDay());
     return(
     <TouchableOpacity 
     style={styles.container} 
@@ -55,7 +73,7 @@ export default class CardComponent extends Component {
 
         <View>
           <Text style={styles.allDate}> {dayName} </Text>
-          <Text style={styles.allDate}> 21.01.2018 </Text>
+          <Text style={styles.allDate}> {displayDate} </Text>
         </View>
         <View>
           <Text style={styles.arrive}> Arrive between </Text>
