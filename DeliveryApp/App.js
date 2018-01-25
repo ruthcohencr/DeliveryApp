@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import { AppRegistry, StyleSheet, Text, View, ScrollView, TouchableOpacity,Image } from 'react-native';
 import SupplierCard from './app/components/SupplierCard/SupplierCard';
 import CardComponent from './app/components/CardComponent/CardComponent';
-//import Circle from './app/components/Circle/Circle.js';
+import ImageComponent from './app/components/ImageComponent/ImageComponent';
 
 export default class DeliveryApp extends Component {
   render() {
@@ -10,7 +10,11 @@ export default class DeliveryApp extends Component {
       <View style={styles.container}>
        
         <View style={styles.header}> 
-          <Text style={styles.headerText}> Future Orders  </Text>
+            <ImageComponent style={styles.headerIcon}
+             imageUri = 'https://www.iconsdb.com/icons/preview/white/map-marker-2-xxl.png'/>
+            <Text style={styles.headerText}> Future orders </Text>
+            <ImageComponent style={styles.headerIcon}
+            imageUri = 'http://houstoncreativesmiles.com/wp-content/themes/ss3/assets/css/hamburger.png'/>
         </View>
       <ScrollView style={styles.scrollContainer}>
       <View style={styles.cardStyle}>
@@ -38,11 +42,17 @@ const styles = StyleSheet.create({
     paddingRight:20,
   },
   header:{
+    flexDirection:'row',
     backgroundColor:'rgb(66,97,144)',
     alignItems: 'center',
-    borderBottomWidth:10,
-    borderBottomColor:'#ddd',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    borderTopWidth:10,
+    borderTopColor:'#ddd',
+    paddingLeft:10,
+    paddingRight:10,
+    },
+  headerIcon:{
+  
   },
   headerText:{
     color:'white',
@@ -54,7 +64,6 @@ const styles = StyleSheet.create({
     flex:1,
     flexDirection:'column',
     marginBottom:5,
-
   },
 });
 

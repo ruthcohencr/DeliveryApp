@@ -3,17 +3,7 @@ import { AppRegistry, StyleSheet, Text, View, ScrollView, Image, TouchableHighli
 //import {Circle} from '../components/Circle';
 import { CLIENTS } from '../../mockdata/deliveryMock.js';
 import { WEEK } from '../../mockdata/week.js';
-
-
-  const customers = [
-       {name: 'Ruth Cohen', streetName:'Bereshit', streetNumber: 16, city:'Ramat-Hasharon',supplyDay:'Sunday'},
-       {name: 'Ron Cohen',streetName:'Ovdat', streetNumber: 9, city:'Holon',supplyDay:'Monday'},
-       {name: 'Michel Levi',streetName:'Bet-Gobrin', streetNumber: 7, city:'Bne-Brak',supplyDay:'Monday'},
-       {name: 'Israel Meir',streetName:'Hamlachim', streetNumber: 5, city:'Jerusalem',supplyDay:'Wednesday'},
-       {name: 'Ron Cohen',streetName:'Ovdat', streetNumber: 9, city:'Holon',supplyDay:'Monday'},
-       {name: 'Michel Levi',streetName:'Bet-Gobrin', streetNumber: 7, city:'Bne-Brak',supplyDay:'Monday'},
-       {name: 'Israel Meir',streetName:'Hamlachim', streetNumber: 5, city:'Jerusalem',supplyDay:'Wednesday'}
-   ]
+import  ImageComponent  from '../ImageComponent/ImageComponent';
 
 export default class CardComponent extends Component {
 
@@ -22,14 +12,12 @@ export default class CardComponent extends Component {
     
     var dd = date.getDate();
     returnDate += dd.toString().length == 1 ? '0'+ dd +'.': dd+".";
-    console.log(returnDate);
     var mm = date.getMonth()+1;
 
     returnDate += mm.toString().length == 1 ? '0'+ mm +'.': mm+'.';
 
     returnDate += date.getFullYear();
 
-    console.log(returnDate);
     return returnDate;
   }
 
@@ -78,7 +66,7 @@ export default class CardComponent extends Component {
         <View>
           <Text style={styles.arrive}> Arrive between </Text>
           <Text style={styles.arriveHour}>
-          {timeFrom} - {timeTo}  </Text>
+          {timeFrom}  -  {timeTo}  </Text>
         </View>
 
       </View>
@@ -89,11 +77,9 @@ export default class CardComponent extends Component {
           <Text style={styles.customerDetails}> {customer.address['street']} {customer.address['number']}, 
           {' '+customer.address['city']} </Text>
         </View>
-
-        <View style={styles.circle}>
-          <Image style={styles.imageStyle} source={{ uri: 'https://www.iconsdb.com/icons/preview/white/map-marker-2-xxl.png' }} />
+        <View style={styles.circle}>                 
+          <ImageComponent imageUri='https://www.iconsdb.com/icons/preview/white/map-marker-2-xxl.png'/>
         </View>
-
       </View>
 
     </View>
@@ -154,7 +140,9 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
     fontWeight: 'bold',
-    paddingLeft: 5,
+    paddingLeft: 7,
+    alignSelf: 'center',
+    
   },
   id: {
     fontSize: 14,
