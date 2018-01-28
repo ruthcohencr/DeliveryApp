@@ -4,20 +4,19 @@ import { AppRegistry, StyleSheet, Text, View, ScrollView, Image, TouchableHighli
 import { CLIENTS } from '../../mockdata/deliveryMock.js';
 import { WEEK } from '../../mockdata/week.js';
 import  ImageComponent  from '../ImageComponent/ImageComponent';
+import { StackNavigator} from 'react-navigation';
+import { NavigationActions } from 'react-navigation';
 
 export default class CardComponent extends Component {
 
+  currentCustomer = null;
   bringDate(date){
-    var returnDate = "";
-    
+    var returnDate = "";  
     var dd = date.getDate();
     returnDate += dd.toString().length == 1 ? '0'+ dd +'.': dd+".";
     var mm = date.getMonth()+1;
-
     returnDate += mm.toString().length == 1 ? '0'+ mm +'.': mm+'.';
-
     returnDate += date.getFullYear();
-
     return returnDate;
   }
 
@@ -25,15 +24,24 @@ export default class CardComponent extends Component {
     console.log('Card Pressed');
   };
 
-  constructor() {
-    super();
+  onCardPress(customer){
+    // navigate('DeliveryScreen',{customer},NavigationActions.navigate({
+    //   routeName: 'DeliveryScreen', params: {customer}
+    // }));
+    console.log('sended customer =' + customer.client['name'])
+    navigate('DeliveryScreen',{customer});
+  }
+  constructor(props) {
+    super(props);
     clientsList = CLIENTS;
-   
+
+    navigate = this.props.navigate;
+
     var time1 = new Date (clientsList[0]['from']);
     var time2 = new Date(clientsList[0]['to']);
     time1 = time1.getHours() + ':' + '00';
     time2 = time2.getHours() + ':' + '00';
-    console.log(time1+" "+time2);
+    //console.log(time1+" "+time2);
     
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
@@ -41,6 +49,8 @@ export default class CardComponent extends Component {
     };
 
   }
+
+  
 
   renderRow(customer, sectionID, rowID, highlightRow){
 
@@ -51,12 +61,13 @@ export default class CardComponent extends Component {
 
     var displayDate = this.bringDate(supplyDate);
     
+    this.currentCustomer = customer;
+    console.log( 'c = ' +  this.currentCustomer.client['name']);
     return(
-    <TouchableOpacity 
-    style={styles.container} 
-    onPress={this.onCardPress}
-    underlayColor='rgb(66,97,144)'>
-    <View >
+    <TouchableOpacity onPress= {() => {  this.onCardPress(customer)}}
+      style={styles.container} 
+      underlayColor='rgb(66,97,144)'>
+      <View >
       <View style={styles.cardsHeader}>
 
         <View>
@@ -88,11 +99,11 @@ export default class CardComponent extends Component {
   }
 
   render() {
+    //const { navigate } = this.props.navigation;
     return (
         <ListView
         dataSource={this.state.userDataSource}
-        renderRow={this.renderRow.bind(this)}/>
-        
+        renderRow={this.renderRow.bind(this)}/>      
     );
   }
 }
@@ -174,7 +185,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb( 57, 229, 200)',
     justifyContent: 'center',
     alignSelf: 'center',
-
   },
 
 });

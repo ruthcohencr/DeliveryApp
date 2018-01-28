@@ -1,29 +1,26 @@
 import React,{Component} from 'react';
 import { AppRegistry, StyleSheet, Text, View, ScrollView, TouchableOpacity,Image } from 'react-native';
-import SupplierCard from './app/components/SupplierCard/SupplierCard';
 import CardComponent from './app/components/CardComponent/CardComponent';
 import ImageComponent from './app/components/ImageComponent/ImageComponent';
+import DeliveryScreenComponent from './app/components/DeliveryScreenComponent/DeliveryScreenComponent';
+import MainScreenComponent from './app/components/MainScreenComponent/MainScreenComponent';
+import { StackNavigator} from 'react-navigation';
+
+const App = StackNavigator({
+  MainScreen: { screen: MainScreenComponent },
+  DeliveryScreen: { screen: DeliveryScreenComponent },
+},{
+  headerMode: 'none',
+  navigationOptions: {
+      headerVisible: false,
+  }
+});
 
 export default class DeliveryApp extends Component {
-  render() {
+  
+  render(){
     return (
-      <View style={styles.container}>
-       
-        <View style={styles.header}> 
-            <ImageComponent style={styles.headerIcon}
-             imageUri = 'https://www.iconsdb.com/icons/preview/white/map-marker-2-xxl.png'/>
-            <Text style={styles.headerText}> Future orders </Text>
-            <ImageComponent style={styles.headerIcon}
-            imageUri = 'http://houstoncreativesmiles.com/wp-content/themes/ss3/assets/css/hamburger.png'/>
-        </View>
-      <ScrollView style={styles.scrollContainer}>
-      <View style={styles.cardStyle}>
-         <CardComponent></CardComponent>
-         
-      </View>
-      </ScrollView>
-    
-      </View>  
+      <App/>
     );
   }  
 }
